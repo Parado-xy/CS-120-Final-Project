@@ -153,40 +153,44 @@ class SaveStudentDetails:
 
 # Class for saving Freshman details
 class SaveFreshmanDetails(SaveStudentDetails):
-    def __init__(self, file_path):
+    def __init__(self, file_path, operation = 'a'):
         super().__init__(file_path)
+        self.operation = operation
 
     def save(self, student: Freshman):
-        with open(self.file_path, 'a') as file:
+        with open(self.file_path, mode = self.operation) as file:
             student_info = f"{student.name}, {student.age}, {student.ID}, {student.high_school_gpa}, {student.email}\n"
             file.write(student_info)
 
 # Class for saving Sophomore details
 class SaveSophomoreDetails(SaveStudentDetails):
-    def __init__(self, file_path):
+    def __init__(self, file_path, operation = 'a'):
         super().__init__(file_path)
+        self.operation = operation
 
     def save(self, student: Sophomore):
-        with open(self.file_path, 'a') as file:
+        with open(self.file_path, mode = self.operation) as file:
             student_info = f"{student.name}, {student.age}, {student.ID}, {student.major}, {student.cumulative_gpa}\n"
             file.write(student_info)
 
 # Class for saving Junior details
 class SaveJuniorDetails(SaveStudentDetails):
-    def __init__(self, file_path):
+    def __init__(self, file_path, operation = 'a'):
         super().__init__(file_path)
+        self.operation = operation
 
     def save(self, student: Junior):
-        with open(self.file_path, 'a') as file:
+        with open(self.file_path, mode = self.operation) as file:
             student_info = f"{student.name}, {student.age}, {student.ID}, {student.major}, {student.cumulative_gpa}, {student.internship_status}, {student.research_involvement}\n"
             file.write(student_info)
 
 # Class for saving Senior details
 class SaveSeniorDetails(SaveStudentDetails):
-    def __init__(self, file_path):
+    def __init__(self, file_path, operation = 'a'):
         super().__init__(file_path)
+        self.operation = operation
 
     def save(self, student: Senior):
-        with open(self.file_path, 'a') as file:
+        with open(self.file_path, mode = self.operation) as file:
             student_info = f"{student.name}, {student.age}, {student.ID}, {student.major}, {student.cumulative_gpa}, {student.graduation_requirements_met}, {student.post_graduation_plans}\n"
             file.write(student_info)

@@ -3,7 +3,20 @@ from tkinter import ttk, messagebox
 import os
 from StudentClasses import Freshman, Sophomore, Junior, Senior, SaveFreshmanDetails, SaveSophomoreDetails, SaveJuniorDetails, SaveSeniorDetails
 
+# Save each student type to a separate file
+student_types = {
+    'Freshman': SaveFreshmanDetails('student_records/freshman.txt'),
+    'Sophomore': SaveSophomoreDetails('student_records/sophomore.txt'),
+    'Junior': SaveJuniorDetails('student_records/junior.txt'),
+    'Senior': SaveSeniorDetails('student_records/senior.txt')
+}
+
+os.listdir()
+
+
 class StudentManagementGUI:
+    
+
     def __init__(self, master):
         self.master = master
         master.title("Student Management System")
@@ -30,6 +43,89 @@ class StudentManagementGUI:
 
         # Initialize student storage
         self.students = []
+
+        # Load up students already in database.
+        self.load_students_from_files()
+
+    def load_students_from_files(self):
+        # Clear existing students
+        self.students.clear()
+        
+        # Ensure the student_records directory exists
+        if not os.path.exists('student_records'):
+            return
+
+        # Define loading methods for each student type
+        def load_freshman(line):
+            try:
+                name, age, ID, high_school_gpa, email = line.strip().split(', ')
+                return Freshman(name, ID, int(age), email, float(high_school_gpa), None)
+            except ValueError:
+                print(f"Error parsing Freshman line: {line}")
+                return None
+
+        def load_sophomore(line):
+            try:
+                name, age, ID, major, cumulative_gpa = line.strip().split(', ')
+                return Sophomore(name, ID, int(age), "", major, float(cumulative_gpa))
+            except ValueError:
+                print(f"Error parsing Sophomore line: {line}")
+                return None
+
+        def load_junior(line):
+            try:
+                name, age, ID, major, cumulative_gpa, internship_status, research_involvement = line.strip().split(', ')
+                junior = Junior(name, ID, int(age), "", major, float(cumulative_gpa))
+                junior.internship_status = internship_status == 'True'
+                junior.research_involvement = research_involvement == 'True'
+                return junior
+            except ValueError:
+                print(f"Error parsing Junior line: {line}")
+                return None
+
+        def load_senior(line):
+            try:
+                name, age, ID, major, cumulative_gpa, graduation_requirements_met, post_graduation_plans = line.strip().split(', ')
+                senior = Senior(name, ID, int(age), "", major, float(cumulative_gpa))
+                senior.graduation_requirements_met = graduation_requirements_met == 'True'
+                senior.post_graduation_plans = post_graduation_plans if post_graduation_plans != 'None' else None
+                return senior
+            except ValueError:
+                print(f"Error parsing Senior line: {line}")
+                return None
+
+        # Mapping of file names to loading functions
+        student_loaders = {
+            'freshman.txt': load_freshman,
+            'sophomore.txt': load_sophomore,
+            'junior.txt': load_junior,
+            'senior.txt': load_senior
+        }
+
+        # Iterate through each file and load students
+        for filename, loader in student_loaders.items():
+            file_path = os.path.join('student_records', filename)
+            
+            if not os.path.exists(file_path):
+                continue
+
+            try:
+                with open(file_path, 'r') as file:
+                    for line in file:
+                        if line.strip():  # Ignore empty lines
+                            student = loader(line)
+                            if student:
+                                self.students.append(student)
+                                # Also add to treeview
+                                self.tree.insert("", tk.END, values=(
+                                    student.name, 
+                                    student.ID, 
+                                    type(student).__name__
+                                ))
+            except Exception as e:
+                print(f"Error reading {filename}: {e}")
+
+    
 
     def create_input_frames(self, master):
         # Common fields frame
@@ -213,8 +309,9 @@ class StudentManagementGUI:
                 messagebox.showinfo("Success", "Student information updated!")
         except ValueError as e:
             messagebox.showerror("Error", f"Invalid input: {str(e)}")
-
+    # FLAG: : : : : : : : : : : : : : :
     def delete_student(self):
+
         selected_item = self.tree.selection()
         if not selected_item:
             messagebox.showerror("Error", "Please select a student to delete")
@@ -223,6 +320,7 @@ class StudentManagementGUI:
         # Get student ID
         item = self.tree.item(selected_item[0])
         student_id = item['values'][1]
+        student_type = item['values'][2]  # Get student type from treeview
 
         # Remove from students list
         self.students = [s for s in self.students if s.ID != student_id]
@@ -230,7 +328,21 @@ class StudentManagementGUI:
         # Remove from treeview
         self.tree.delete(selected_item[0])
 
-        messagebox.showinfo("Success", "Student deleted successfully!")
+        # Clear the corresponding file and re-save remaining students
+        try:
+            with open(f'student_records/{student_type.lower()}.txt', 'w') as file:
+                file.write('')  # Clear the file
+            
+            # Save remaining students of the same type
+            saver = student_types.get(student_type)
+            if saver:
+                for student in self.students:
+                    if type(student).__name__ == student_type:
+                        saver.save(student)
+
+            messagebox.showinfo("Success", "Student deleted successfully!")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to delete student: {str(e)}")
 
     def save_student_details(self):
         if not self.students:
@@ -239,14 +351,7 @@ class StudentManagementGUI:
 
         # Create directory if it doesn't exist
         os.makedirs('student_records', exist_ok=True)
-
-        # Save each student type to a separate file
-        student_types = {
-            'Freshman': SaveFreshmanDetails('student_records/freshman.txt'),
-            'Sophomore': SaveSophomoreDetails('student_records/sophomore.txt'),
-            'Junior': SaveJuniorDetails('student_records/junior.txt'),
-            'Senior': SaveSeniorDetails('student_records/senior.txt')
-        }
+        global student_types
 
         for student in self.students:
             student_type = type(student).__name__

@@ -1,2 +1,5 @@
-Omajuwa Jalla, 17, G00456279, 3.0
-Json Vhores, 200, G00456279, 3.9, jack@gmail.cpm
+Emily Chen, 18, F001, 3.8, emily.chen@university.edu
+Jason Rodriguez, 19, F002, 3.5, jason.rodriguez@university.edu
+Sarah Thompson, 18, F003, 3.9, sarah.thompson@university.edu
+Michael Wong, 19, F004, 3.2, michael.wong@university.edu
+Olivia Patel, 18, F005, 4.0, olivia.patel@university.edu

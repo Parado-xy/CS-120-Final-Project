@@ -2,7 +2,7 @@ This project is a Student Management System designed with a GUI built using Pyth
 
 
 
-Detailed Algorithm for Student Management System
+### Detailed Algorithm for Student Management System
 
 1. Initialize the Application:
    - Launch the tkinter GUI with a main window titled "Student Management System".
@@ -73,7 +73,7 @@ Detailed Algorithm for Student Management System
    - Extend data retrieval functionality to include error handling for corrupt or missing files.
      - Ensure that the application gracefully handles empty files or formatting issues.
 
-Classes Overview:
+### Classes Overview:
 1. Student (Base Class):
    - Attributes: name, ID, age, email.
    - Methods: display_student_information, update_student_information.
@@ -97,5 +97,5 @@ Classes Overview:
 6. SaveStudentDetails and Subclasses:
    - Handles saving student data to files based on type.
 
-Conclusion:
+### Conclusion:
 The final build of the application will include robust data persistence, ensuring all student details are loaded at startup and stored securely upon modifications. A password system will protect access, adding a layer of security to the management system.

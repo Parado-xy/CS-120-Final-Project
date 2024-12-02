@@ -1,0 +1,5 @@
+Alex Kim, 20, S001, Computer Science, 3.6
+Emma Gonzalez, 20, S002, Biology, 3.8
+Ryan Nguyen, 19, S003, Engineering, 3.4
+Sophia Martinez, 20, S004, Psychology, 3.7
+Lucas Chen, 19, S005, Mathematics, 3.5

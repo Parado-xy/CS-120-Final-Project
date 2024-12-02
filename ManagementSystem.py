@@ -11,7 +11,7 @@ student_types = {
     'Senior': SaveSeniorDetails('student_records/senior.txt')
 }
 
-os.listdir()
+
 
 
 class StudentManagementGUI:
@@ -47,6 +47,7 @@ class StudentManagementGUI:
         # Load up students already in database.
         self.load_students_from_files()
 
+     # FLAG: : : : : : : : : : : : : : :
     def load_students_from_files(self):
         # Clear existing students
         self.students.clear()
@@ -309,6 +310,7 @@ class StudentManagementGUI:
                 messagebox.showinfo("Success", "Student information updated!")
         except ValueError as e:
             messagebox.showerror("Error", f"Invalid input: {str(e)}")
+            
     # FLAG: : : : : : : : : : : : : : :
     def delete_student(self):
 

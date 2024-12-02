@@ -1,0 +1,5 @@
+Daniel Lee, 22, SR001, Computer Science, 3.9, True, Graduate School
+Zoe Anderson, 23, SR002, Biology, 3.7, True, Medical School
+Ethan Rodriguez, 22, SR003, Engineering, 3.6, True, Industry Job
+Aria Chen, 23, SR004, Psychology, 3.8, True, Research Position
+Jackson Kim, 22, SR005, Business, 3.5, True, Startup Founder

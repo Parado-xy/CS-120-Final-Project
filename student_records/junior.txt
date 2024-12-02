@@ -1,0 +1,5 @@
+Ethan Park, 21, J001, Computer Science, 3.7, True, False
+Ava Sharma, 21, J002, Bioengineering, 3.6, False, True
+Noah Williams, 22, J003, Electrical Engineering, 3.5, True, True
+Isabella Garcia, 21, J004, Environmental Science, 3.8, False, False
+Liam Thompson, 22, J005, Economics, 3.4, True, False

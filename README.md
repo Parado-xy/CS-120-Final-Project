@@ -13,7 +13,7 @@
 
 ## System Architecture
 ### Key Components
-1. `login.py`: User Authentication Interface
+1. `login.py`: User Authentication Interface and application entry point.
 2. `ManagementSystem.py`: Main Application GUI
 3. `StudentClasses.py`: Student Class Hierarchy
 4. `dummy_data.py`: Data Generation Utility
